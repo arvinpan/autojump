@@ -70,10 +70,10 @@ j() {
 # jump to child directory (subdirectory of current path)
 jc() {
     if [[ ${1} == -* ]] && [[ ${1} != "--" ]]; then
-        autojump ${@}
+        autojump --child ${@}
         return
     else
-        j $(pwd) ${@}
+        j ${@} --child
     fi
 }
 
@@ -114,9 +114,9 @@ jo() {
 # open autojump results (child directory) in file browser
 jco() {
     if [[ ${1} == -* ]] && [[ ${1} != "--" ]]; then
-        autojump ${@}
+        autojump --child ${@}
         return
     else
-        jo $(pwd) ${@}
+        jo ${@} --child
     fi
 }
