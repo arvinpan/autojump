@@ -117,6 +117,9 @@ def parse_arguments():
         const=15, default=False,
         help='decrease current directory weight')
     parser.add_argument(
+        '--child', action="store_true", default=False,
+        help='only match subdirectories of the current working directory')
+    parser.add_argument(
         '--complete', action="store_true", default=False,
         help='used for tab completion')
     parser.add_argument(
@@ -293,6 +296,13 @@ def main(args):  # noqa
         needles = sanitize(args.directory)
         tab_needle, tab_index, tab_path = \
             get_tab_entry_info(first(needles), TAB_SEPARATOR)
+
+        if args.child:
+            pwd = get_pwd()
+            entries = ifilter(
+                lambda entry: entry.path.find(pwd) == 0,
+                entries
+            )
 
         # Handle `j foo__`, assuming first index.
         if not tab_path and not tab_index \
